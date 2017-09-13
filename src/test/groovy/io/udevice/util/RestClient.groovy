@@ -11,7 +11,8 @@ class RestClient {
         def client = new RESTClient(url)
         client.contentType = ContentType.JSON
         client.handler.failure = { resp ->
-            resp.status
+            resp
+            // 错误处理由 resp.status 变为 resp
         }
         return client
     }
@@ -19,7 +20,7 @@ class RestClient {
     public static def getClient(String url) {
         def client = new RESTClient(url)
         client.handler.failure = { resp ->
-            resp.status
+            resp
         }
         return client
     }
@@ -27,7 +28,7 @@ class RestClient {
     public static def post(String url, def body) {
         def client = getJsonClient(url)
         def response = client.post(body: body)
-        return response.data
+        return response
     }
 
     public static def put(String url, def body) {
